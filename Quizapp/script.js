@@ -109,14 +109,45 @@ function selectAnswer(e){
     const iscorrect = selectedBtn.dataset.correct === "true";
     if(iscorrect){
         selectedBtn.classList.add("correct")
+        score++;
     }else{
         selectedBtn.classList.add("incorrect")
     }
-
-
-
+    Array.from(answerBtn.children).forEach(button => {
+        if(button.dataset.correct === "true"){
+            button.classList.add = "correct"
+        }
+        button.disabled = "true";
+    })
+    nextBtn.style.display = "block";
 
 }
+
+function showScore(){
+    resetState();
+    questionElement.innerHTML = "You scored "+ score + "out of " + questions.length;
+    nextBtn.innerHTML = "Play Again";
+    nextBtn.style.display = "block";
+}
+
+function handleNextButton(){
+    currentQuestionIndex++;
+    if(currentQuestionIndex< questions.length){
+        showQuestions();
+    }else{
+        showScore();
+    }
+    }
+
+
+nextBtn.addEventListener("click", () => {
+    if(currentQuestionIndex < questions.length){
+        handleNextButton();
+    }
+    else{
+        startQuiz();
+    }
+})
 
 startQuiz();
 
